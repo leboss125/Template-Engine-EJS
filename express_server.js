@@ -12,9 +12,20 @@ let urlDatabase = {
   "9sm5xK": "http://www.google.com"
 };
 
+function generateRandomString() {
+  return (Math.random() * 6).toString(36).substring(6).toUpperCase();
+}
+
 app.get("/", (req, res) => {
   res.send("Hello!");
 });
+
+app.post("/urls", (req, res) => {
+  console.log(req.body); 
+  res.send("Ok");         
+});
+
+console.log(generateRandomString())
 
 
 app.get("/urls", (req, res) => {
