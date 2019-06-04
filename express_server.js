@@ -18,7 +18,7 @@ function generateRandomString() {
 app.post("/urls", (req, res) => {
   let random = generateRandomString().toString();
    urlDatabase[random] = req.body.longURL; 
-  res.send(urlDatabase);
+  res.redirect('/');
 });
 
 app.get("/u/:shortURL", (req, res) => {
