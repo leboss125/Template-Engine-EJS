@@ -10,6 +10,17 @@
 </head>
 <body style="font-size:20px; padding:50px;">
     <!-- Add EJS code here -->
-    <h1>hello word</h1>
+
+    <main class="container">
+        <h1>TinyApp</h1>
+        <a href="#">Create a new Tinyurl</a>
+        <% if(shortURL && longURL){
+          %>
+        <h2>My Urls for : <b> <%= longURL %> </b></h2>
+                <p> <%= shortURL%> </p>
+            <% } %>
+    </main>
+    
+
 </body>
 </html>
