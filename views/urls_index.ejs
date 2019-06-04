@@ -16,7 +16,10 @@
         <a href="#">Create a new Tinyurl</a>
         <h2>My Urls</h2>
             <ul>
-                <li><%= templateVars  %></li>
+            <% if(urls){ %>
+                <%  for(link in urls){ %>
+                <li> <b> <%= link %></b> <%= urls[link] %></li>
+                <% }} %>
             </ul>
     </main>
     
