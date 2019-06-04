@@ -10,9 +10,10 @@
 </head>
 <body style="font-size:20px; padding:50px;">
     <!-- Add EJS code here -->
-
+  <header>
+     <% include ./partials/_header %>
+  </header>
     <main class="container">
-        <h1>TinyApp</h1>
         <a href="#">Create a new Tinyurl</a>
         <% if(shortURL && longURL){
           %>
@@ -20,7 +21,5 @@
                 <p> <%= shortURL%> </p>
             <% } %>
     </main>
-    
-
 </body>
 </html>
