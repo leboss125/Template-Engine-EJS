@@ -15,12 +15,12 @@
   </header>
     <main class="container">
         <h1>TinyApp</h1>
-        <a href="#">Create a new Tinyurl</a>
+        <a href="/urls/new">Create a new Tinyurl</a>
         <h2>My Urls</h2>
             <ul>
             <% if(urls){ %>
                 <%  for(link in urls){ %>
-                <li> <b> <%= link %></b> <%= urls[link] %></li>
+                <li><a href="/u/<%= link %>"  target="_black"> <%= link %></a> <%= urls[link] %></li>
                 <% }} %>
             </ul>
     </main>

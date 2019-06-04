@@ -15,20 +15,27 @@ let urlDatabase = {
 function generateRandomString() {
   return (Math.random() * 6).toString(36).substring(6).toUpperCase();
 }
+app.post("/urls", (req, res) => {
+  let random = generateRandomString().toString();
+   urlDatabase[random] = req.body.longURL; 
+  res.send(urlDatabase);
+});
+
+app.get("/u/:shortURL", (req, res) => {
+  // const longURL = ... 
+  let id = urlDatabase[req.params.shortURL];
+  if(id){
+    res.redirect(id);
+  }else{
+    res.send('error')
+  }
+  // res.redirect(longURL);
+});
+
+// console.log(generateRandomString())
+
 
 app.get("/", (req, res) => {
-  res.send("Hello!");
-});
-
-app.post("/urls", (req, res) => {
-  console.log(req.body); 
-  res.send("Ok");         
-});
-
-console.log(generateRandomString())
-
-
-app.get("/urls", (req, res) => {
     let templateVars = { urls: urlDatabase };
     res.render("urls_index", templateVars);
   });
