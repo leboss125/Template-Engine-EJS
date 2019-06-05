@@ -17,9 +17,11 @@
         <a href="/urls/new">Create a new Tinyurl</a>
         <h2>My Urls</h2>
             <ul>
-            <% if(urls){ %>
+            <%
+              home = true;
+             if(urls){ %>
                 <%  for(link in urls){ %>
-                <li><a href="/u/<%= link %>"  target="_black"> <%= link %></a> <%= urls[link] %></li>
+                <li><a href="/urls/<%= link %>"  target="_black"> <%= link %></a> <%= urls[link] %></li>
                 <% }} %>
             </ul>
     </main>

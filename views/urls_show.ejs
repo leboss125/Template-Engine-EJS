@@ -14,11 +14,13 @@
      <% include ./partials/_header %>
   </header>
     <main class="container">
-        <a href="#">Create a new Tinyurl</a>
-        <% if(shortURL && longURL){
+        <a href="/urls/new">Create a new Tinyurl</a>
+        <%
+          var home = true;
+        if(shortURL && longURL){
           %>
         <h2>My Urls for : <b> <%= longURL %> </b></h2>
-                <p> <%= shortURL%> </p>
+                <a href="/u/<%= shortURL %>" target="_blanck"> <%= shortURL %> </a>
             <% } %>
     </main>
 </body>
