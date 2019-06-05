@@ -18,10 +18,11 @@
         <h2>My Urls</h2>
             <ul>
             <%
-              home = true;
+              home = false;
              if(urls){ %>
                 <%  for(link in urls){ %>
-                <li><a href="/urls/<%= link %>"  target="_black"> <%= link %></a> <%= urls[link] %></li>
+                <li class="d-flex"><a href="/urls/<%= link %>"  target="_black"> <%= link %></a> <%= urls[link] %> <form method="POST"  action="/urls/<%= link %>/delete"><input style="margin-left:20px" value="delete" type="submit" class="btn btn-danger" /></form></li>
+                
                 <% }} %>
             </ul>
     </main>
