@@ -16,11 +16,13 @@
     <main class="container">
         <a href="/urls/new">Create a new Tinyurl</a>
         <%
-          var home = true;
         if(shortURL && longURL){
           %>
         <h2>My Urls for : <b> <%= longURL %> </b></h2>
-                <a href="/u/<%= shortURL %>" target="_blanck"> <%= shortURL %> </a>
+                <p> <a href="/u/<%= shortURL %>" target="_blank"> <%= shortURL %></a>
+                <a href="/u/<%= shortURL %>" target="_blank">http://localhost:8080/u/<%= shortURL %></a>
+                </p><br/>
+                <form action="/urls/<%= shortURL %>/update" method="post"><input name="update" style="width: 100%;" value="<%= longURL %>">  <input type="submit" style="margin-top:20px;" value="update" class="btn btn-primary"/></form>
             <% } %>
     </main>
 </body>

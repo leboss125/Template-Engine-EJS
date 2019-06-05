@@ -18,15 +18,14 @@
         <h2>My Urls</h2>
             <ul>
             <%
-              home = false;
              if(urls){ %>
                 <%  for(link in urls){ %>
-                <li class="d-flex"><a href="/urls/<%= link %>"  target="_black"> <%= link %></a> <%= urls[link] %> <form method="POST"  action="/urls/<%= link %>/delete"><input style="margin-left:20px" value="delete" type="submit" class="btn btn-danger" /></form></li>
-                
+                <li class="d-flex"><a href="/urls/<%= link %>"  target="_black"> <%= link %></a> <%= urls[link] %> 
+                <form method="POST"  action="/urls/<%= link %>/delete"><input style="margin-left:20px" value="delete" type="submit" class="btn btn-danger" /></form>
+                <form method="get"  action="/urls/<%= link %>"><input style="margin-left:10px;" value="update" type="submit" class="btn btn-primary" /></form>
+                </li>
                 <% }} %>
             </ul>
     </main>
-    
-
 </body>
 </html>
