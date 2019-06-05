@@ -49,7 +49,7 @@ app.post('/urls/:shortURL/update', (req, res) => {
 });
 
 app.post('/logout', (req,res)=>{
-  res.clearCookie('username',req.params.cookies['username']);
+  res.clearCookie('username');
   res.redirect('/');
 });
 
