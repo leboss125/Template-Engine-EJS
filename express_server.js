@@ -50,15 +50,19 @@ function newUserCheck(email, password){
   }
   return false;
 }
-
-
 // post request
 
-// app.post('/login',(req,res) =>{
-//     const { username } = req.body;
-//     res.cookie('user_id', username);
-//     res.redirect('/')
-// });
+app.post('/login',(req,res) =>{
+    const { email, password } = req.body;
+    for(key in users){
+      if(users[key].email == email && users[key].password == password){
+        const userId = key;
+        res.cookie('user_id', userId);
+        res.redirect('/');
+      }
+    }
+    res.status(403).send('<h2>fail to login incorrect username or password create account <a href="/register"> here </a> </h2>')
+});
 
 app.post('/register',(req,res)=>{
   const { email, password } = req.body;
@@ -72,10 +76,13 @@ app.post('/register',(req,res)=>{
     console.log('user_id',userId, users)
       if(users[userId]) {
         res.cookie('user_id',userId);
-        res.status(200).redirect('/')
+        res.redirect('/')
       }
+  }else{
+
+
+    res.redirect('/register')
   }
-    res.status(401).redirect('/register');
 });
 
 
@@ -103,6 +110,7 @@ app.post('/logout', (req,res)=>{
   res.redirect('/');
 });
 
+
 // get requests 
 
 app.get("/u/:shortURL", (req, res) => {
@@ -119,6 +127,11 @@ app.get("/u/:shortURL", (req, res) => {
 app.get('/register', (req,res) =>{
   const username = { cookie: req.cookies['user_id'], users: users }
   res.render('register', username);
+})
+
+app.get('/login', (req,res) =>{
+  const templateVars = {cookie: req.cookies['user_id'],users:users}
+  res.render('login', templateVars);
 })
 
 app.get("/", (req, res) => {
