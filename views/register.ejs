@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>New URL </title>
+  </head>
+
+  <body style="font-size:20px; padding:50px;">
+
+    <header>
+        <% include ./partials/_header
+        %>
+    </header>
+
+    <h3>Create User</h3>
+    <form class="form-inline" action="/register" method="POST">
+        <input type="email" name="email" placeholder="email" /><br/>
+        <input type="password" name="password" placeholder="password" />
+        <button type="submit" class="btn btn-primary">register</button>
+    </form>
+  </body>
+</html>
