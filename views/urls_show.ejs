@@ -19,9 +19,9 @@
           %>
         <h2>My Urls for : <b> <%= longURL %> </b></h2>
                 <p> <a href="/u/<%= shortURL %>" target="_blank"> <%= shortURL %></a>
-                <span class="text-danger"><a href="/u/<%= shortURL %>" target="_blank">http://localhost:8080/u/<%= shortURL %></a></span> <input type="submit" value="copy sortUrl" class="Copy btn btn-primary"/>
+                <span class="text-danger"><a href="/u/<%= shortURL %>" target="_blank">http://localhost:8080/u/<%=  %></a></span> <input type="submit" value="copy sortUrl" class="Copy btn btn-primary"/>
                 </p><br/>
-                <form action="/urls/<%= shortURL %>/update" method="post"><input name="update" style="width: 100%;" value="<%= longURL %>">  <input type="submit" style="margin-top:20px;" value="update" class="btn btn-primary"/></form>
+                <form action="/urls/<%= shortURL %>/update" method="post"><input name="update" style="width: 100%;" value="<%= longURL.longURL %>">  <input type="submit" style="margin-top:20px;" value="update" class="btn btn-primary"/></form>
             <% } %>
     </main>
 </body>
