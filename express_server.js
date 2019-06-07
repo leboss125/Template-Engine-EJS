@@ -64,10 +64,10 @@ function newUserCheck(email, password,users){
 function userUrls(cookieId, urlDatabase){
   let newObj = {}
   let randomKey;
-  for(user in urlDatabase){
-      if(urlDatabase[user].userID === cookieId){
-        randomKey = generateRandomString();
-          newObj[randomKey] = urlDatabase[user];
+  for(shortURL in urlDatabase){
+      if(urlDatabase[shortURL].userID === cookieId){
+        // randomKey = generateRandomString();
+          newObj[shortURL] = urlDatabase[shortURL];
       }
   }
   return newObj;
