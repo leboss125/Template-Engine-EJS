@@ -55,7 +55,7 @@ function generateRandomString() {
   return (Math.random() * 6).toString(36).substring(6).toUpperCase();
 }
 
-// Checking if user input is valid before storing it in user's database
+// Checking if user input is valid 
 function newUserCheck(email, password, users) {
   for (userId in users) {
     if (users[userId].email === email) {
@@ -68,7 +68,7 @@ function newUserCheck(email, password, users) {
   return true;
 }
 
-// Sorts url for a specific user  and returns an object
+// Sorts url for a specific user and returns an object
 function userUrls(userId, urlDatabase) {
   let newObj = {};
   for (shortURL in urlDatabase) {
@@ -79,19 +79,14 @@ function userUrls(userId, urlDatabase) {
   return newObj;
 }
 
-// Login post route  
+// Checking if user id exist in the users db and comparing email and password if they match 
 app.post('/login', (req, res) => {
-  // getting the email and password from the request body
   const {email, password} = req.body;
-  // looping in to id in user's database
   for (id in users) {
-    // Checking if user id exist in the users db and comparing email and password if they match 
-    if (users[id].email == email && bcrypt.compareSync(password, users[id].password)) {
-      // if match storing id in userId const 
+    if (users[id].email === email && bcrypt.compareSync(password, users[id].password)) {
       const userId = id;
       // setting a cookie session 
       req.session.user_id = userId;
-      // then redirect to the route
       return res.redirect('/');
     }
   }
@@ -99,13 +94,10 @@ app.post('/login', (req, res) => {
   res.status(403).send('<h2>fail to login incorrect username or password create account <a href="/register"> here </a> </h2>')
 });
 
-// register post route 
+// cheking if password and email are not empty and email does not allready exist 
 app.post('/register', (req, res) => {
-  // getting request body
   const { email, password } = req.body;
-  // generatting a new user id 
   const newUserId = generateRandomString();
-  // cheking if password and email are not empty and does not allready exist 
   if (newUserCheck(email, password, users)) {
     // creating new user in db 
     users[newUserId] = {
@@ -115,17 +107,14 @@ app.post('/register', (req, res) => {
     }
     // setting a cookie session
     req.session.user_id = newUserId;
-    // redirecting user in home page
     res.redirect("/");
   } else {
-    // else return 403 status and a message  to the user
     res.status(403).send('user all ready exist');
   }
 });
 
-// urls post rout for creating new Tiny urls only if user is login  
+// creating new Tiny urls only if user is login 
 app.post("/urls", (req, res) => {
-  // geting the user id
   const userId = req.session.user_id;
   // cheking if user exist
   if(users[userId]){
@@ -135,43 +124,34 @@ app.post("/urls", (req, res) => {
       longURL: req.body.longURL,
       userID: userId
   }
-  // redirect user to urls get path 
   res.redirect('/');
   }else{
     res.status(401).send('invalid request please login');
   }
 });
 
-// delete url when user is  loged in 
+// delete url when user only if user is login
 app.post('/urls/:shortURL/delete', (req, res) => {
-  // getting shorturl from url
   const { shortURL } = req.params;
-  // getting user id from cookie-session
   const userId = req.session.user_id;
-  // cheking if user exist and he's id match url id 
-  if (users[userId] && urlDatabase[shortURL].userID == userId) {
-    // delete url
+  // checking if user exist and user id match url userid
+  if (users[userId] && urlDatabase[shortURL].userID === userId) {
     delete urlDatabase[shortURL];
     res.redirect('/');
   } else {
-    // else response with status code and message error 
     res.status(401).send('invalid request login');
   }
 });
 
 // update url if user in loged in and url exist
 app.post('/urls/:shortURL/update', (req, res) => {
-  // getting shortUrl from as parame from url
   const { shortURL } = req.params;
-  // getting user id from cookie-session
   const userId = req.session.user_id;
   // cheking if user is login and id match url user id
-  if (users[userId] && urlDatabase[shortURL].userID == userId) {
-    // updating the url
+  if (users[userId] && urlDatabase[shortURL].userID === userId) {
     urlDatabase[shortURL].longURL = req.body.update;
     res.redirect('/');
   } else {
-    // else responde with status code and error message 
     res.status(401).send('invalid request register');
   }
 });
@@ -185,37 +165,30 @@ app.post('/logout', (req, res) => {
 
 // Get requests 
 
-// urls redirection from Tiny url to the actual url
+// urls redirection from Tiny url to the actual url long url
 app.get("/u/:shortURL", (req, res) => {
-  // getting the long url from the short url 
-  let longURL = urlDatabase[req.params.shortURL].longURL;
-  // checking if its exist
-  if (longURL) {
-    // then redirect to longURL 
-    res.redirect(longURL);
+  let shortURL = req.params.shortURL;
+  if (urlDatabase[shortURL]) {
+    res.redirect(urlDatabase[shortURL].longURL);
   } else {
-    // else send error
-    res.send('error')
+    res.send('sorry this short url does not exist');
   }
 });
 
-// get route for register page
+// render register view
 app.get('/register', (req, res) => {
-  // getting the user
   const user = {
     user: users[req.session.user_id]
   }
-  // rendering the view
   res.render('register', user);
 });
 
-// login route 
+// render login view
 app.get('/login', (req, res) => {
-  // giving the user id to render function
+  
   const templateVars = {
     user: users[req.session.user_id]
   }
-  // render the login view
   res.render('login', templateVars);
 });
 
@@ -224,25 +197,21 @@ app.get('/', (req, res) => {
   res.redirect('/urls')
 });
 
-// urls get route
+// render view showing urls to the user 
 app.get("/urls", (req, res) => {
-  // getting user id from session cookie
   const userId = req.session.user_id;
-  // getting urls for this specific user
   let urls = userUrls(userId, urlDatabase);
-  // cheking id user exist 
   if (users[userId]) {
-    // render view with usels
     res.render("urls_index", {
       urls: urls,
       user: users[userId]
     });
   } else {
-    // else redirect to user login page
     res.redirect('/login');
   }
 });
 
+// render create new url page
 app.get('/urls/new', (req, res) => {
   const templateVars = {
     cookie: req.session.user_id,
@@ -255,14 +224,13 @@ app.get('/urls/new', (req, res) => {
   }
 });
 
-// showing user url 
+  // Render the url view
 app.get("/urls/:shortURL", (req, res) => {
   let templateVars = {
     shortURL: req.params.shortURL,
     longURL: urlDatabase[req.params.shortURL].longURL,
     user: users[req.session.user_id]
   }
-  // Render the view
   res.render("urls_show", templateVars);
 });
 
